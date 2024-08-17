@@ -1,7 +1,8 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import db from "@repo/db/client";
+import { JWT } from "next-auth/jwt";
 
 interface Credentials {
     phone: string;
@@ -16,16 +17,13 @@ export const authOptions: NextAuthOptions = {
                 phone: { label: "Phone number", type: "text", placeholder: "1231231231", required: true },
                 password: { label: "Password", type: "password", required: true }
             },
-            async authorize(credentials: Credentials | undefined) {
+            async authorize(credentials: Credentials | any) {
                 if (!credentials) {
                     return null;
                 }
 
-                const hashedPassword = await bcrypt.hash(credentials.password, 10);
                 const existingUser = await db.user.findFirst({
-                    where: {
-                        number: credentials.phone
-                    }
+                    where: { number: credentials.phone }
                 });
 
                 if (existingUser) {
@@ -36,12 +34,14 @@ export const authOptions: NextAuthOptions = {
                             name: existingUser.name,
                             email: existingUser.number
                         };
+                    } else {
+                        return null;
                     }
-                    return null;
                 }
 
                 try {
-                    const user = await db.user.create({
+                    const hashedPassword = await bcrypt.hash(credentials.password, 10);
+                    const newUser = await db.user.create({
                         data: {
                             number: credentials.phone,
                             password: hashedPassword
@@ -49,12 +49,12 @@ export const authOptions: NextAuthOptions = {
                     });
 
                     return {
-                        id: user.id.toString(),
-                        name: user.name,
-                        email: user.number
+                        id: newUser.id.toString(),
+                        name: newUser.name,
+                        email: newUser.number
                     };
-                } catch (e) {
-                    console.error(e);
+                } catch (error) {
+                    console.error("Error creating user:", error);
                     return null;
                 }
             }
@@ -62,7 +62,7 @@ export const authOptions: NextAuthOptions = {
     ],
     secret: process.env.JWT_SECRET,
     callbacks: {
-        async session({ token, session }: any) {
+        async session({ token, session }: { token: JWT, session: any }) {
             if (token?.sub) {
                 session.user.id = token.sub;
             }
