@@ -1,5 +1,5 @@
 {
-  "name": "securewallet",
+  "name": "secureWallet",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -20,8 +20,5 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "dependencies": {
-    "prisma": "^5.18.0"
-  }
+  ]
 }

@@ -1,7 +1,3 @@
-Here’s a well-structured and curated README file for your **SecureWallet** project:
-
----
-
 # **SecureWallet**
 
 **SecureWallet** is a secure and feature-rich digital wallet application built using modern web technologies. It offers a seamless and safe way to manage your digital transactions.

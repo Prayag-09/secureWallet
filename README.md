@@ -1,81 +1,90 @@
-# Turborepo starter
+# **SecureWallet**
 
-This is an official starter Turborepo.
+**SecureWallet** is a secure and feature-rich digital wallet application built using modern web technologies. It offers a seamless and safe way to manage your digital transactions.
 
-## Using this example
 
-Run the following command:
+## **Table of Contents**
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Database Setup](#database-setup)
+- [Running the Application](#running-the-application)
+- [Contributing](#contributing)
+- [License](#license)
 
-```sh
-npx create-turbo@latest
+## **Features**
+- Secure authentication with NextAuth.
+- User-friendly interface designed with Tailwind CSS.
+- Efficient and scalable architecture using Turborepo.
+- Real-time transaction updates.
+- Integrated with PostgreSQL for reliable data storage.
+- Built-in support for multiple users with secure password management.
+
+## **Tech Stack**
+- **Frontend:** [Next.js](https://nextjs.org/) (React Framework)
+- **Backend:** [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)
+- **Database:** [PostgreSQL](https://www.postgresql.org/)
+- **ORM:** [Prisma](https://www.prisma.io/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Authentication:** [NextAuth](https://next-auth.js.org/)
+- **Monorepo Management:** [Turborepo](https://turborepo.org/)
+
+## **Installation**
+
+### **Prerequisites**
+- [Node.js](https://nodejs.org/en/) (v14.x or higher)
+- [PostgreSQL](https://www.postgresql.org/) (v13.x or higher)
+
+### **Clone the repository**
+```bash
+git clone https://github.com/yourusername/SecureWallet.git
+cd SecureWallet
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+### **Install dependencies**
+```bash
+npm install
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+### **Turborepo Setup**
+```bash
+npm run build
 ```
 
-### Remote Caching
+## **Environment Variables**
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Create a `.env` file in the root directory and add the following environment variables:
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+```env
+DATABASE_URL=postgresql://<user>:<password>@localhost:5432/securewallet
+NEXTAUTH_SECRET=your_jwt_secret_code
+NEXTAUTH_URL=http://localhost:3000
 ```
 
-## Useful Links
+## **Database Setup**
 
-Learn more about the power of Turborepo:
+Ensure that PostgreSQL is installed and running. Set up the database with Prisma:
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+```bash
+npx prisma migrate dev --name init
+npx prisma generate
+```
+
+## **Running the Application**
+
+### **Development**
+To start the development server, run:
+```bash
+npm run dev
+```
+Visit the application at `http://localhost:3000`.
+
+### **Production**
+To build the application for production:
+```bash
+npm run build
+npm start
+
+
+**SecureWallet** - Your trusted digital wallet solution.
